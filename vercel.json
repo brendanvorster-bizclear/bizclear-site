@@ -1,0 +1,14 @@
+{
+  "redirects": [
+    {
+      "source": "https://www.bizclear.nz/(.*)",
+      "destination": "https://bizclear.nz/$1",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "destination": "https://bizclear.nz/$1",
+      "permanent": true
+    }
+  ]
+}
