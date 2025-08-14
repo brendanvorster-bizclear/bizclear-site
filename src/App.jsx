@@ -35,15 +35,84 @@ const DEFAULT_CONFIG = {
     title: "Start with a free pre-assessment QuickScan",
     sub: "Power 25. Core 45. Prime 60. Designed for leaders who want clarity, momentum, and results.",
   },
+  // Keeping this for Admin panel compatibility; we no longer surface it in UI
   sessionKey: "Session key: Power 25 = 25 min • Core 45 = 45 min • Prime 60 = 60 min",
+
+  // === Updated packages: minutes inline, 'why' lines, clearer response-time wording ===
   packages: [
-    { id: "foundation", title: "Foundation Focus", price: "NZD $1,080 + GST", bullets: ["6 x Core 45 across 12 weeks", "Optional Prime 60 kick-off", "Email check-ins (48 hr weekdays)"] },
-    { id: "accelerator", title: "Leadership Accelerator", price: "NZD $1,935 + GST", bullets: ["8 x Core 45 (weekly or fortnightly)", "4 x Power 25 banked", "Discord check-ins (24 hr weekdays)"], featured: true },
-    { id: "retainer", title: "Executive Retainer", price: "NZD $395 + GST / month", bullets: ["Monthly Core 45", "Two Power 25 / month", "Priority Discord (12-24 hr)", "Optional quarterly Prime 60 calibration (+$245) with QuickScan add-on"] },
-    { id: "intensive", title: "Intensive (One-off)", price: "NZD $765 + GST", bullets: ["Prime 60 discovery + Core 45 design", "Includes Intro Session + QuickScan", "3 x Power 25 follow-ups", "Insight and recommendations pack", "Discord support (6-week window)"] },
-    { id: "flexi", title: "Flexi Coaching", price: "From NZD $115 + GST / session", bullets: ["Power 25 or Core 45", "Optional Discord day-pass add-on", "Same focused approach, no commitment"] },
-    { id: "team", title: "Leadership Team Intervention", price: "Tailored programme", bullets: ["Discovery with senior sponsor", "Team QuickScan + targeted diagnostics", "Facilitated sessions and embeds", "Outcome roadmap & cadence", "Contact us to scope"] },
+    {
+      id: "foundation",
+      title: "Foundation Focus",
+      price: "NZD $1,080 + GST",
+      why: "Build momentum with a simple, steady cadence.",
+      bullets: [
+        "6 × 45‑min sessions over 12 weeks",
+        "Optional 60‑min kick‑off (+$245)",
+        "In‑between‑session support via Email — responses within 48 business hours"
+      ]
+    },
+    {
+      id: "accelerator",
+      title: "Leadership Accelerator",
+      price: "NZD $1,935 + GST",
+      why: "Best for fast clarity and accountability over one quarter.",
+      bullets: [
+        "8 × 45‑min sessions (weekly or fortnightly)",
+        "4 × 25‑min sprint sessions banked",
+        "In‑between‑session support via Instant Messaging — responses within 24 business hours"
+      ],
+      featured: true
+    },
+    {
+      id: "retainer",
+      title: "Executive Retainer",
+      price: "NZD $395 + GST / month",
+      why: "Light, ongoing stewardship to keep priorities sharp and performance steady.",
+      bullets: [
+        "1 × 45‑min coaching session per month",
+        "2 × 25‑min sprint sessions per month",
+        "Priority Instant Messaging — responses within 12–24 business hours",
+        "Optional quarterly 60‑min calibration (+$245)"
+      ]
+    },
+    {
+      id: "intensive",
+      title: "Intensive (One‑off)",
+      price: "NZD $765 + GST",
+      why: "Deep dive to solve a specific leadership challenge, fast.",
+      bullets: [
+        "60‑min discovery + 45‑min design",
+        "Includes Intro Session + QuickScan Assessment",
+        "3 × 25‑min follow‑ups",
+        "Insight & recommendations pack",
+        "Instant Messaging support during 6‑week window — responses within 24 business hours"
+      ]
+    },
+    {
+      id: "flexi",
+      title: "Flexi Coaching",
+      price: "From NZD $115 + GST / session",
+      why: "Pay‑as‑you‑go when you just need a focused session.",
+      bullets: [
+        "25‑min or 45‑min sessions",
+        "Optional Instant Messaging day‑pass add‑on"
+      ]
+    },
+    {
+      id: "team",
+      title: "Leadership Team Intervention",
+      price: "Tailored programme",
+      why: "For teams that need alignment, delivery rhythm, and better flow — quickly.",
+      bullets: [
+        "Discovery with senior sponsor",
+        "Team QuickScan Assessment + targeted diagnostics",
+        "Facilitated sessions & embeds",
+        "Outcome roadmap & cadence",
+        "Contact us to scope"
+      ]
+    }
   ],
+
   testimonials: [
     { quote: "Brendan helped me cut through noise and make two critical decisions in a fortnight. Clarity and momentum in equal measure.", name: "COO, Energy sector", meta: "Executive client" },
     { quote: "Power 25 was a game changer for accountability. The rhythm stuck and our delivery cadence improved within a month.", name: "Tribe Lead, Financial services", meta: "Leadership client" },
@@ -92,7 +161,7 @@ function AdminPanel(props){
     <div className="fixed bottom-5 left-5 z-50">
       <button onClick={()=>setOpen(!open)} className="inline-flex items-center gap-2 rounded-xl px-3 py-2 border bg-white hover:bg-slate-50 text-sm">CMS</button>
       {open && (
-        <div className="mt-2 w[email protected](92vw,720px) max-h-[70vh] overflow-auto rounded-2xl border bg-white shadow-xl p-4 text-sm">
+        <div className="mt-2 w-[min(92vw,720px)] max-h-[70vh] overflow-auto rounded-2xl border bg-white shadow-xl p-4 text-sm">
           <div className="flex items-center justify-between">
             <div className="font-semibold">Admin Panel</div>
             <div className="flex items-center gap-2">
@@ -117,7 +186,14 @@ function AdminPanel(props){
                   <input className="border rounded px-2 py-1 flex-1" value={p.price} onChange={e=>{ var v=e.target.value; var arr=[...cfg.packages]; arr[i]=Object.assign({}, p, {price:v}); setCfg(Object.assign({}, cfg, {packages:arr})); }} />
                   <label className="text-xs ml-2"><input type="checkbox" className="mr-1" checked={!!p.featured} onChange={e=>{ var arr=[...cfg.packages]; arr[i]=Object.assign({}, p, {featured:e.target.checked}); setCfg(Object.assign({}, cfg, {packages:arr})); }} />Featured</label>
                 </div>
-                <textarea className="mt-2 w-full border rounded p-2 text-xs" rows={2} value={p.bullets.join("\n")} onChange={e=>{ var arr=[...cfg.packages]; arr[i]=Object.assign({}, p, {bullets:e.target.value.split(/\n+/)}); setCfg(Object.assign({}, cfg, {packages:arr})); }} />
+                <textarea className="mt-2 w-full border rounded p-2 text-xs" rows={3} value={(p.why ? [p.why].concat(p.bullets).join("\n") : p.bullets.join("\n"))}
+                  onChange={e=>{
+                    const lines = e.target.value.split(/\n+/);
+                    const next = Object.assign({}, p, { why: lines[0] || "", bullets: lines.slice(1) });
+                    const arr=[...cfg.packages]; arr[i]=next;
+                    setCfg(Object.assign({}, cfg, {packages:arr}));
+                  }} />
+                <div className="text-[11px] text-slate-500 mt-1">(First line = “why this package”; lines below = bullets)</div>
               </div>
             ))}
           </div>
@@ -332,7 +408,7 @@ export default function App(){
     var highlights = recommendations.highlight.length ? recommendations.highlight.join(', ') : 'None';
     var pkgLine = 'Selected package: ' + PKG_LABELS[selectedPkg || 'accelerator'];
     return (
-      'QuickScan v1.0 (audience: ' + AUDIENCE_LABELS[audience] + ', questions: ' + items.length + ')\n' +
+      'QuickScan Assessment (audience: ' + AUDIENCE_LABELS[audience] + ', questions: ' + items.length + ')\n' +
       pkgLine + '\nName: ' + name + '\nEmail: ' + email + '\nPhone: ' + phone + '\nOrg/Role: ' + org + ' / ' + role + '\nCompletion: ' + completion + '%\n\n' +
       'Module means: ' + ms + '\nFocus candidates: ' + highlights + '\n' +
       'Suggest VALOR© core: ' + (recommendations.suggestVALOR? 'Yes':'No') + '\n' +
@@ -348,7 +424,7 @@ export default function App(){
   }
   function downloadCSV(){ var blob=new Blob([buildCSV()],{type:"text/csv;charset=utf-8;"}); var url=URL.createObjectURL(blob); var a=document.createElement("a"); a.href=url; a.download='Bizclear_QuickScan_'+(name||'anonymous')+'.csv'; a.click(); URL.revokeObjectURL(url); }
   async function copySummary(){ await navigator.clipboard.writeText(makeSummaryText()); alert("Summary copied to clipboard."); }
-  function submitMailto(){ var to=cfg.contact.email; var subject=encodeURIComponent('QuickScan Submission - '+(name||'Anonymous')); var body=encodeURIComponent(makeSummaryText()); var cc = email? '&cc='+encodeURIComponent(email): ''; window.location.href='mailto:'+to+'?subject='+subject+cc+'&body='+body; setSubmitted(true); }
+  function submitMailto(){ var to=cfg.contact.email; var subject=encodeURIComponent('QuickScan Assessment Submission - '+(name||'Anonymous')); var body=encodeURIComponent(makeSummaryText()); var cc = email? '&cc='+encodeURIComponent(email): ''; window.location.href='mailto:'+to+'?subject='+subject+cc+'&body='+body; setSubmitted(true); }
 
   return (
     <div className="min-h-screen text-[15px] text-slate-900" style={{ background: `linear-gradient(180deg, ${brand.sand} 0%, #ffffff 45%)` }}>
@@ -390,7 +466,7 @@ export default function App(){
             </a>
             <a href="#quickscan"
               className="inline-flex items-center gap-2 rounded-xl px-5 py-3 border border-white/30 bg-white/10 hover:bg-white/20">
-              Take the Quick Assessment <ChevronRight className="w-4 h-4"/>
+              Take the QuickScan Assessment <ChevronRight className="w-4 h-4"/>
             </a>
           </div>
 
@@ -400,7 +476,6 @@ export default function App(){
           </div>
         </div>
       </section>
-
 
       <Packages selectedPkg={selectedPkg} setSelectedPkg={setSelectedPkg}/>
       <Diagnostics/>
@@ -426,33 +501,79 @@ export default function App(){
 }
 
 function Packages({ selectedPkg, setSelectedPkg }){
+  const [openId, setOpenId] = useState(null); // for “Tell me more”
   return (
     <section id="packages" className="mx-auto max-w-6xl px-4 py-14">
       <h2 className="text-2xl md:text-3xl font-semibold">Leadership Coaching Packages</h2>
-      <p className="text-slate-600 mt-1">Short, focused sessions that convert insight to action.</p>
-      {/* <div className="mt-2 text-xs text-slate-500"><span className="font-medium text-slate-700">{DEFAULT_CONFIG.sessionKey}</span></div> */}
+      {/* Removed the old minutes key + redundant subtext for clarity */}
+
       <div className="mt-6 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {DEFAULT_CONFIG.packages.map(card => (
-          <button key={card.id} onClick={()=>setSelectedPkg(card.id)} className={`relative text-left rounded-2xl border bg-white p-6 shadow-sm hover:shadow transition focus:outline-none ${selectedPkg===card.id? 'ring-2 ring-sky-700 border-sky-700' : card.featured? 'ring-1 ring-sky-200' : ''}`} aria-pressed={selectedPkg===card.id}>
-            {card.featured && <span className="absolute -top-2 right-3 rounded-full bg-sky-700 text-white text-[11px] px-2 py-0.5">Most popular</span>}
-            <div className="text-sky-800 text-sm font-semibold">{card.title}</div>
-            <div className="mt-1 text-lg font-semibold">{card.price}</div>
-            {card.featured && <div className="mt-1 inline-flex items-center rounded-full bg-sky-50 text-sky-700 border border-sky-100 px-2 py-0.5 text-[11px]">Most popular</div>}
-            <ul className="mt-3 space-y-2 text-sm">{card.bullets.map((b,i)=>(<li key={i} className="flex items-start gap-2"><CheckCircle className="w-4 h-4 mt-0.5 text-sky-700"/> {b}</li>))}</ul>
-            <div className="mt-4 text-xs text-slate-500">Click to {selectedPkg===card.id? 'confirm selection' : 'select package'}</div>
-            {selectedPkg===card.id && (
-              card.id==='team' ? (
-                <a href="#contact" className="mt-3 inline-flex items-center gap-2 rounded-xl px-4 py-2 bg-sky-700 text-white hover:bg-sky-800">Enquire about team coaching <ChevronRight className="w-4 h-4"/></a>
-              ) : (
-                <a href="#quickscan" className="mt-3 inline-flex items-center gap-2 rounded-xl px-4 py-2 bg-sky-700 text-white hover:bg-sky-800">Start QuickScan <ChevronRight className="w-4 h-4"/></a>
-              )
-            )}
-          </button>
-        ))}
+        {DEFAULT_CONFIG.packages.map(card => {
+          const isSelected = selectedPkg === card.id;
+          const isOpen = openId === card.id;
+
+          return (
+            <div key={card.id}
+                 className={`relative text-left rounded-2xl border bg-white p-6 shadow-sm hover:shadow-md transition
+                             focus-within:ring-2 focus-within:ring-sky-600 flex flex-col`}>
+              {card.featured && (
+                <span className="absolute -top-2 right-3 rounded-full bg-sky-700 text-white text-[11px] px-2 py-0.5">
+                  Most popular
+                </span>
+              )}
+
+              <button onClick={()=>setSelectedPkg(card.id)} className="text-left">
+                <div className="text-sky-800 text-sm font-semibold">{card.title}</div>
+                <div className="mt-1 text-lg font-semibold">{card.price}</div>
+                {card.featured && (
+                  <div className="mt-1 inline-flex items-center rounded-full bg-sky-50 text-sky-700 border border-sky-100 px-2 py-0.5 text-[11px]">
+                    Most popular
+                  </div>
+                )}
+                {/* NEW: concise reason to pick */}
+                {card.why && <div className="mt-2 text-[13.5px] text-slate-700">{card.why}</div>}
+
+                <ul className="mt-3 space-y-2 text-sm">
+                  {card.bullets.map((b,i)=>(
+                    <li key={i} className="flex items-start gap-2">
+                      <CheckCircle className="w-4 h-4 mt-0.5 text-sky-700"/> {b}
+                    </li>
+                  ))}
+                </ul>
+              </button>
+
+              {/* Actions */}
+              <div className="mt-4 flex items-center gap-3">
+                <button
+                  onClick={()=>setOpenId(isOpen ? null : card.id)}
+                  className="text-sm underline underline-offset-4 decoration-slate-300 hover:decoration-sky-400">
+                  {isOpen ? "Hide details" : "Tell me more"}
+                </button>
+
+                <button
+                  onClick={()=>setSelectedPkg(card.id)}
+                  className={`ml-auto inline-flex items-center gap-2 rounded-xl px-3 py-1.5 text-sm
+                             ${isSelected ? 'bg-sky-700 text-white' : 'border hover:bg-slate-50'}`}>
+                  {isSelected ? 'Selected' : 'Select'}
+                </button>
+              </div>
+
+              {/* Lightweight expandable details */}
+              {isOpen && (
+                <div className="mt-3 text-[13.5px] text-slate-600 border-t pt-3">
+                  What happens next: pick a package, complete the QuickScan Assessment, and we’ll set up an Intro Session to confirm goals and cadence. You can switch packages after the intro if a different fit makes more sense.
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
+
       {selectedPkg && (
         <div className="mt-6">
-          <a href={selectedPkg==='team'? '#contact':'#quickscan'} className="inline-flex items-center gap-2 rounded-xl px-5 py-3 bg-sky-700 text-white hover:bg-sky-800">{selectedPkg==='team'? 'Enquire about team coaching' : `Start QuickScan`} <ChevronRight className="w-4 h-4"/></a>
+          <a href={selectedPkg==='team'? '#contact':'#quickscan'} className="inline-flex items-center gap-2 rounded-xl px-5 py-3 bg-sky-700 text-white hover:bg-sky-800">
+            {selectedPkg==='team'? 'Enquire about team coaching' : `Start QuickScan Assessment`} <ChevronRight className="w-4 h-4"/>
+          </a>
           <div className="text-xs text-slate-500 mt-2">We’ll use your selection to set up an Intro Session and confirm details.</div>
         </div>
       )}
@@ -468,10 +589,10 @@ function Diagnostics(){
         <div className="mt-3 grid md:grid-cols-3 gap-6">
           <div>
             <div className="font-medium">Intro Session <span className="text-slate-500">(complimentary)</span></div>
-            <p className="text-slate-600 mt-1">A focused 20-minute conversation to unpack your QuickScan results and outline options.</p>
+            <p className="text-slate-600 mt-1">A focused 20-minute conversation to unpack your QuickScan Assessment and outline options.</p>
           </div>
           <div>
-            <div className="font-medium">QuickScan v1.0 <span className="text-slate-500">(16-36 items)</span></div>
+            <div className="font-medium">QuickScan Assessment v1.0 <span className="text-slate-500">(16–36 items)</span></div>
             <p className="text-slate-600 mt-1">Evidence-informed triage that determines whether <strong>VALOR© Core</strong> or Bespoke Modules are needed for your <strong>Prime 60</strong> and plan.</p>
           </div>
           <div>
@@ -503,7 +624,6 @@ function Testimonials(){
     </section>
   );
 }
-
 
 function QuickScan(){
   const [audience, setAudience] = useState("smb");
@@ -552,7 +672,7 @@ function QuickScan(){
     var ms = moduleScores.filter(function(m){return !isNaN(m.mean);}).map(function(m){return m.module+': '+m.mean.toFixed(2);}).join('; ');
     var highlights = recommendations.highlight.length ? recommendations.highlight.join(', ') : 'None';
     return (
-      'QuickScan v1.0 (audience: ' + AUDIENCE_LABELS[audience] + ', questions: ' + items.length + ')\n' +
+      'QuickScan Assessment (audience: ' + AUDIENCE_LABELS[audience] + ', questions: ' + items.length + ')\n' +
       'Name: ' + name + '\nEmail: ' + email + '\nPhone: ' + phone + '\nOrg/Role: ' + org + ' / ' + role + '\nCompletion: ' + completion + '%\n\n' +
       'Module means: ' + ms + '\nFocus candidates: ' + highlights + '\n' +
       'Notes: ' + notes
@@ -562,14 +682,14 @@ function QuickScan(){
   function buildCSV(){ var header=["id","item","module","score(1-5)"]; var rows=[header].concat(items.map(function(it){ return [it.id,it.text,it.module, answers[it.id]? String(answers[it.id]): ""]; })); return toCSV(rows); }
   function downloadCSV(){ var blob=new Blob([buildCSV()],{type:"text/csv;charset=utf-8;"}); var url=URL.createObjectURL(blob); var a=document.createElement("a"); a.href=url; a.download='Bizclear_QuickScan_'+(name||'anonymous')+'.csv'; a.click(); URL.revokeObjectURL(url); }
   async function copySummary(){ await navigator.clipboard.writeText(makeSummaryText()); alert("Summary copied to clipboard."); }
-  function submitMailto(){ var subject=encodeURIComponent('QuickScan Submission - '+(name||'Anonymous')); var body=encodeURIComponent(makeSummaryText()); var cc = email? '&cc='+encodeURIComponent(email): ''; window.location.href='mailto:'+DEFAULT_CONFIG.contact.email+'?subject='+subject+cc+'&body='+body; setSubmitted(true); }
+  function submitMailto(){ var subject=encodeURIComponent('QuickScan Assessment Submission - '+(name||'Anonymous')); var body=encodeURIComponent(makeSummaryText()); var cc = email? '&cc='+encodeURIComponent(email): ''; window.location.href='mailto:'+DEFAULT_CONFIG.contact.email+'?subject='+subject+cc+'&body='+body; setSubmitted(true); }
   function handleSetAnswer(id, val){ setAnswers(a=>({ ...a, [id]: val })); }
 
   return (
     <section id="quickscan" className="mx-auto max-w-6xl px-4 py-12">
       <div className="flex items-end justify-between gap-4">
         <div>
-          <h3 className="text-2xl font-semibold">QuickScan v1.0</h3>
+          <h3 className="text-2xl font-semibold">QuickScan Assessment</h3>
           <p className="text-slate-600">Choose your context so we tailor the items. 1–5 agreement scale.</p>
         </div>
         <div className="text-sm flex items-center gap-2">
@@ -676,7 +796,7 @@ function Contact({ cfg }){
         <div className="rounded-2xl border bg-slate-50 p-4">
           <div className="text-sm font-medium text-slate-800">NZPB 90-07630</div>
           <div className="text-xs text-slate-600 mt-1">Auckland, NZ</div>
-          <div className="text-xs text-slate-600 mt-2">Discord/Email touchpoints per package.</div>
+          <div className="text-xs text-slate-600 mt-2">In‑between‑session support via Email / Instant Messaging — response times depend on package.</div>
         </div>
       </div>
     </section>
