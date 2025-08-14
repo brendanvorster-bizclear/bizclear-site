@@ -1,6 +1,9 @@
 import React, { useMemo, useState, useEffect } from "react";
 import { CheckCircle, Mail, Phone, Download, ClipboardCheck, ChevronRight, ShieldCheck, Sparkles, Quote, MessageCircle, Bot, X, Send } from "lucide-react";
 
+// === Admin visibility flag (Vite env) ===
+const SHOW_ADMIN = import.meta.env.VITE_SHOW_ADMIN === 'true';
+
 function LogoLightCircle({ className }) {
   return (
     <svg className={className} viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg" aria-label="Bizclear logo">
@@ -71,6 +74,9 @@ function useConfig() {
 }
 
 function AdminPanel(props){
+  // Early return in production if gated off
+  if (import.meta.env.VITE_SHOW_ADMIN !== 'true') return null;
+
   const { cfg, setCfg, reset } = props;
   const [open, setOpen] = useState(false);
   useEffect(function(){ if (location.hash.indexOf("admin") >= 0) setOpen(true); },[]);
@@ -395,7 +401,11 @@ export default function App(){
           </div>
         </div>
       </footer>
-      <AdminPanel cfg={cfg} setCfg={setConfig} reset={resetConfig}/>
+
+      {/* Gate the floating CMS admin button on env flag */}
+      {SHOW_ADMIN && (
+        <AdminPanel cfg={cfg} setCfg={setConfig} reset={resetConfig}/>
+      )}
     </div>
   );
 }
@@ -455,7 +465,7 @@ function Diagnostics(){
           </div>
         </div>
         <details className="mt-4 rounded-xl bg-white p-4 border text-sm"><summary className="cursor-pointer font-medium text-slate-800">What is VALOR©?</summary><p className="mt-2 text-slate-600">{DEFAULT_CONFIG.valor.explainer}</p></details>
-        <p className="mt-4 text-[13.5px] text-slate-500 flex items-center gap-2"><ShieldCheck className="w-4 h-4"/> Developmental use only (not for hiring or ratings). Reliability/validity monitored via item analysis and iteration; method notes supplied in plain English.</p>
+        <p className="mt-4 text:[13.5px] text-slate-500 flex items-center gap-2"><ShieldCheck className="w-4 h-4"/> Developmental use only (not for hiring or ratings). Reliability/validity monitored via item analysis and iteration; method notes supplied in plain English.</p>
       </div>
     </section>
   );
