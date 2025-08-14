@@ -358,38 +358,53 @@ export default function App(){
           <nav className="hidden md:flex items-center gap-6 text-slate-700">
             <a href="#packages" className="hover:text-slate-900">Packages</a>
             <a href="#diagnostics" className="hover:text-slate-900">Diagnostics</a>
-            <a href="#results" className="hover:text-slate-900">Results</a>
+            <a href="#testimonials" className="hover:text-slate-900">Testimonials</a>
             <a href="#quickscan" className="hover:text-slate-900">QuickScan</a>
             <a href="#about" className="hover:text-slate-900">About</a>
             <a href="#contact" className="hover:text-slate-900">Contact</a>
-            <a href="#assistant" className="hover:text-slate-900">Assistant</a>
           </nav>
+
           <a href="#quickscan" className="hidden md:inline-flex items-center gap-2 rounded-xl px-4 py-2 bg-sky-700 text-white hover:bg-sky-800 transition"><Sparkles className="w-4 h-4"/> Start QuickScan</a>
         </div>
       </header>
 
       <section className="bg-gradient-to-br from-sky-900 to-sky-600 text-white">
-        <div className="mx-auto max-w-6xl px-4 py-14 md:py-20 grid md:grid-cols-1 gap-8 items-center">
-          <div>
-            <h1 className="text-3xl md:text-4xl font-semibold leading-tight">{cfg.hero.title}</h1>
-            <p className="mt-4 text-white/90">{cfg.hero.sub}</p>
-            <div className="mt-6 flex flex-col sm:flex-row gap-3">
-              <a href="#quickscan" className="inline-flex items-center gap-2 rounded-xl px-5 py-3 bg-white text-sky-900 font-medium hover:bg-slate-100">Start QuickScan <ChevronRight className="w-4 h-4"/></a>
-              <a href="#assistant" className="inline-flex items-center gap-2 rounded-xl px-5 py-3 bg-sky-800/70 hover:bg-sky-800"><Bot className="w-4 h-4"/> Try Bizclear Assistant</a>
-            </div>
-            <div className="mt-8 grid sm:grid-cols-3 gap-3 text-sky-50">
-              <div className="rounded-2xl bg-white/10 ring-1 ring-white/20 p-4"><div className="text-sm font-semibold">1 · QuickScan</div><div className="text-sm opacity-90">3–5 minutes, evidence-informed items.</div></div>
-              <div className="rounded-2xl bg-white/10 ring-1 ring-white/20 p-4"><div className="text-sm font-semibold">2 · Intro Session (20 min)</div><div className="text-sm opacity-90">Discuss results and shape next steps.</div></div>
-              <div className="rounded-2xl bg-white/10 ring-1 ring-white/20 p-4"><div className="text-sm font-semibold">3 · Your next step</div><div className="text-sm opacity-90">Pick a package or tailored intervention.</div></div>
-            </div>
-            <div className="mt-6 text-sm text-white/80">NZPB Reg. 90-07630 - Auckland, NZ - <a className="underline decoration-white/40 underline-offset-4" href="tel:+6421390191">+64 21 390 191</a></div>
+        <div className="mx-auto max-w-6xl px-4 py-14 md:py-20">
+          <h1 className="text-3xl md:text-4xl font-semibold leading-tight">Bizclear Coaching</h1>
+          <p className="mt-2 text-white/90 text-[15px] md:text-base">
+            {cfg.hero.title}
+          </p>
+          <p className="mt-1 text-white/80 text-sm">
+            {cfg.hero.sub}
+          </p>
+
+          {/* Primary CTAs */}
+          <div className="mt-6 flex flex-col sm:flex-row gap-3">
+            <a href="mailto:bizclearconsulting@outlook.com?subject=Intro%20Session%20Request"
+              className="inline-flex items-center gap-2 rounded-xl px-5 py-3 bg-white text-sky-900 font-medium hover:bg-slate-100">
+              Book an Intro Session <ChevronRight className="w-4 h-4"/>
+            </a>
+            <a href="tel:+6421390191"
+              className="inline-flex items-center gap-2 rounded-xl px-5 py-3 bg-sky-800/80 hover:bg-sky-800">
+              <Phone className="w-4 h-4"/> Call +64&nbsp;21&nbsp;390&nbsp;191
+            </a>
+            <a href="#quickscan"
+              className="inline-flex items-center gap-2 rounded-xl px-5 py-3 border border-white/30 bg-white/10 hover:bg-white/20">
+              Take the Quick Assessment <ChevronRight className="w-4 h-4"/>
+            </a>
+          </div>
+
+          {/* Contact micro-copy */}
+          <div className="mt-6 text-sm text-white/80">
+            Auckland, NZ · NZPB Reg. 90-07630 · <a className="underline decoration-white/40 underline-offset-4" href="tel:+6421390191">+64 21 390 191</a>
           </div>
         </div>
       </section>
 
+
       <Packages selectedPkg={selectedPkg} setSelectedPkg={setSelectedPkg}/>
       <Diagnostics/>
-      <Results/>
+      <Testimonials/>
       <QuickScan/>
       <Contact cfg={cfg}/>
       <ChatWidget/>
@@ -413,9 +428,9 @@ export default function App(){
 function Packages({ selectedPkg, setSelectedPkg }){
   return (
     <section id="packages" className="mx-auto max-w-6xl px-4 py-14">
-      <h2 className="text-2xl md:text-3xl font-semibold">1:1 Coaching Packages</h2>
+      <h2 className="text-2xl md:text-3xl font-semibold">Leadership Coaching Packages</h2>
       <p className="text-slate-600 mt-1">Short, focused sessions that convert insight to action.</p>
-      <div className="mt-2 text-xs text-slate-500"><span className="font-medium text-slate-700">{DEFAULT_CONFIG.sessionKey}</span></div>
+      {/* <div className="mt-2 text-xs text-slate-500"><span className="font-medium text-slate-700">{DEFAULT_CONFIG.sessionKey}</span></div> */}
       <div className="mt-6 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {DEFAULT_CONFIG.packages.map(card => (
           <button key={card.id} onClick={()=>setSelectedPkg(card.id)} className={`relative text-left rounded-2xl border bg-white p-6 shadow-sm hover:shadow transition focus:outline-none ${selectedPkg===card.id? 'ring-2 ring-sky-700 border-sky-700' : card.featured? 'ring-1 ring-sky-200' : ''}`} aria-pressed={selectedPkg===card.id}>
@@ -471,10 +486,10 @@ function Diagnostics(){
   );
 }
 
-function Results(){
+function Testimonials(){
   return (
-    <section id="results" className="mx-auto max-w-6xl px-4 py-12">
-      <h3 className="text-2xl font-semibold">Client results and notes</h3>
+    <section id="testimonials" className="mx-auto max-w-6xl px-4 py-12">
+      <h3 className="text-2xl font-semibold">Testimonials</h3>
       <p className="text-slate-600">Selected quotes from leaders I have coached (shared with consent; some names anonymised).</p>
       <div className="mt-6 grid md:grid-cols-3 gap-6">
         {DEFAULT_CONFIG.testimonials.map((t, idx)=> (
@@ -488,6 +503,7 @@ function Results(){
     </section>
   );
 }
+
 
 function QuickScan(){
   const [audience, setAudience] = useState("smb");
