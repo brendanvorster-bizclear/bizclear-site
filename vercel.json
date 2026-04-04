@@ -1,15 +1,13 @@
 {
-  "buildCommand": "vite build",
-  "outputDirectory": "dist",
-  "redirects": [
-    {
-      "source": "/(.*)",
-      "has": [{ "type": "host", "value": "bizclear.nz" }],
-      "destination": "https://www.bizclear.nz/$1",
-      "permanent": true
-    }
-  ],
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
-  ]
+    "redirects": [
+          {
+                  "source": "/(.*)",
+                  "has": [{ "type": "host", "value": "bizclear.nz" }],
+                  "destination": "https://www.bizclear.nz/$1",
+                  "permanent": true
+          }
+    ],
+    "rewrites": [
+          { "source": "/(.*)", "destination": "/index.html" }
+    ]
 }
