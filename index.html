@@ -552,7 +552,7 @@
       <li><a href="#how-it-works" onclick="showPage('home')">How It Works</a></li>
       <li><a href="#faq" onclick="showPage('home')">FAQ</a></li>
       <li><a href="#food-for-thought" onclick="showPage('home')">Watch</a></li>
-      <li><a href="#support" onclick="showPage('home')">Support</a></li>
+      <li><a href="#" onclick="showPage('support')">Support</a></li>
       <li><a href="#" onclick="showPage('privacy')">Privacy</a></li>
       <li><a href="#" onclick="showPage('terms')">Terms</a></li>
     </ul>
@@ -931,6 +931,68 @@
   </section>
 </div>
 
+<!-- SUPPORT PAGE -->
+<div id="page-support" class="page">
+  <section style="padding-top: 120px;">
+    <div class="section-inner">
+      <div class="legal">
+        <h2>Support</h2>
+        <p class="last-updated">We're here to help.</p>
+
+        <h3>Contact Us</h3>
+        <p>The fastest way to reach us is by email: <a href="mailto:bizclearconsulting@outlook.com" style="color: var(--primary-light);">bizclearconsulting@outlook.com</a></p>
+        <p>We aim to respond within 2 business days (New Zealand time). When you email, please include:</p>
+        <ul>
+          <li>Your iPhone model and iOS version</li>
+          <li>A short description of what you were trying to do</li>
+          <li>Steps to reproduce the issue, if you can</li>
+          <li>Screenshots, if relevant</li>
+        </ul>
+
+        <h3>Common Questions</h3>
+
+        <h4 style="margin-top: 24px; color: var(--primary-light);">My selected apps aren't being shielded</h4>
+        <p>App Fast needs Screen Time authorisation to place shields. If shielding stops working:</p>
+        <ul>
+          <li>Open <strong>Settings &rarr; Screen Time</strong> and confirm Screen Time is on for your device</li>
+          <li>Open App Fast and make sure your apps are still selected under Settings</li>
+          <li>If nothing shows up, tap "Choose Apps" and re-select them &mdash; iOS occasionally clears selections after system updates</li>
+          <li>Restart your device and try again</li>
+        </ul>
+
+        <h4 style="margin-top: 24px; color: var(--primary-light);">I can't bypass the shield when I really need to</h4>
+        <p>That's intentional &mdash; each tier has a different bypass experience:</p>
+        <ul>
+          <li><strong>Gut Check</strong> &mdash; a brief affirmation, then you can continue</li>
+          <li><strong>Light Fast</strong> &mdash; a mindful intervention screen before you decide</li>
+          <li><strong>Full Fast</strong> &mdash; no bypass, by design</li>
+        </ul>
+        <p>If you need access to a Full Fast app, open App Fast and change that app to a lighter tier. Your choice, your pace.</p>
+
+        <h4 style="margin-top: 24px; color: var(--primary-light);">How do I change which apps are shielded or their tier?</h4>
+        <p>Open App Fast, go to Settings, and adjust your selection or per-app tier. Changes take effect immediately.</p>
+
+        <h4 style="margin-top: 24px; color: var(--primary-light);">Do you collect my data?</h4>
+        <p>No. App Fast runs entirely on your device. Nothing is sent to our servers &mdash; we don't have any. See our <a href="#" onclick="showPage('privacy'); return false;" style="color: var(--primary-light);">Privacy Policy</a> for details.</p>
+
+        <h4 style="margin-top: 24px; color: var(--primary-light);">I'm on TestFlight &mdash; how do I send feedback?</h4>
+        <p>Take a screenshot while using App Fast and TestFlight will prompt you to share it. You can also email us directly.</p>
+
+        <h3>Reporting a Bug</h3>
+        <p>Found something broken? Email <a href="mailto:bizclearconsulting@outlook.com" style="color: var(--primary-light);">bizclearconsulting@outlook.com</a> with as much detail as you can. A short video or screenshot helps a lot.</p>
+
+        <h3>Feature Requests</h3>
+        <p>We love hearing what would make App Fast more useful to you. No idea is too small &mdash; drop us a line at <a href="mailto:bizclearconsulting@outlook.com" style="color: var(--primary-light);">bizclearconsulting@outlook.com</a>.</p>
+
+        <h3>Removing the App</h3>
+        <p>To uninstall App Fast, long-press the app icon and tap <strong>Remove App</strong>. All data lives on your device, so it will be removed with the app. You may also want to review <strong>Settings &rarr; Screen Time</strong> if you'd like to revoke App Fast's Screen Time access.</p>
+
+        <p style="margin-top: 24px;"><strong>Bizclear Ltd</strong><br>New Zealand</p>
+      </div>
+    </div>
+  </section>
+</div>
+
 <!-- Footer -->
 <footer>
   <div class="footer-inner">
@@ -939,7 +1001,7 @@
       <li><a href="#features" onclick="showPage('home')">Features</a></li>
       <li><a href="#faq" onclick="showPage('home')">FAQ</a></li>
       <li><a href="#food-for-thought" onclick="showPage('home')">Food for Thought</a></li>
-      <li><a href="#support" onclick="showPage('home')">Support</a></li>
+      <li><a href="#" onclick="showPage('support')">Support</a></li>
       <li><a href="#" onclick="showPage('privacy')">Privacy Policy</a></li>
       <li><a href="#" onclick="showPage('terms')">Terms of Use</a></li>
     </ul>
@@ -951,7 +1013,7 @@
   // Pages that are directly linkable via URL hash (e.g. www.bizclear.nz/#privacy)
   // Other hash values (#features, #faq, etc.) are in-page anchors on the home page
   // and are intentionally NOT routed here.
-  const deepLinkPages = ['privacy', 'terms'];
+  const deepLinkPages = ['privacy', 'terms', 'support'];
 
   function showPage(page) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
