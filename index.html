@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>App Fast — Unplug. Refocus. Renew.</title>
+<title>App Fast — Less noise. More you.</title>
 <meta name="description" content="App Fast helps you take control of your screen time through a faith-based fasting approach. Three tiers of protection to help you build healthier digital habits.">
 <style>
   :root {
@@ -569,7 +569,7 @@
     <h1>Take back your time.<br><span>Fast from your phone.</span></h1>
     <p>App Fast helps you build healthier digital habits through a unique fasting approach. Choose your level of commitment and let the app hold you accountable.</p>
     <a href="#how-it-works" class="hero-cta">See How It Works &#8595;</a>
-    <p class="hero-tagline">Unplug. Refocus. Renew.</p>
+    <p class="hero-tagline">Less noise. More you.</p>
   </section>
 
   <!-- How It Works / Tiers -->
@@ -836,7 +836,7 @@
     <div class="section-inner">
       <div class="legal">
         <h2>Privacy Policy</h2>
-        <p class="last-updated">Last updated: 4 April 2026</p>
+        <p class="last-updated">Last updated: 18 April 2026</p>
 
         <h3>Overview</h3>
         <p>App Fast ("we", "our", "the app") is committed to protecting your privacy. This policy explains what information we collect, how we use it, and your rights.</p>
@@ -888,7 +888,7 @@
     <div class="section-inner">
       <div class="legal">
         <h2>Terms of Use</h2>
-        <p class="last-updated">Last updated: 4 April 2026</p>
+        <p class="last-updated">Last updated: 18 April 2026</p>
 
         <h3>Acceptance of Terms</h3>
         <p>By downloading, installing, or using App Fast ("the app"), you agree to these Terms of Use. If you do not agree, please do not use the app.</p>
@@ -943,17 +943,43 @@
       <li><a href="#" onclick="showPage('privacy')">Privacy Policy</a></li>
       <li><a href="#" onclick="showPage('terms')">Terms of Use</a></li>
     </ul>
-    <p class="footer-copy">&copy; 2026 Bizclear Ltd. All rights reserved. App Fast &mdash; Unplug. Refocus. Renew.</p>
+    <p class="footer-copy">&copy; 2026 Bizclear Ltd. All rights reserved. App Fast &mdash; Less noise. More you.</p>
   </div>
 </footer>
 
 <script>
+  // Pages that are directly linkable via URL hash (e.g. www.bizclear.nz/#privacy)
+  // Other hash values (#features, #faq, etc.) are in-page anchors on the home page
+  // and are intentionally NOT routed here.
+  const deepLinkPages = ['privacy', 'terms'];
+
   function showPage(page) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById('page-' + page).classList.add('active');
     if (page !== 'home') window.scrollTo(0, 0);
     document.getElementById('navLinks').classList.remove('open');
+    // Keep URL in sync so pages are shareable / bookmarkable
+    const currentHash = window.location.hash.slice(1);
+    if (deepLinkPages.includes(page)) {
+      if (currentHash !== page) history.replaceState(null, '', '#' + page);
+    } else if (page === 'home' && deepLinkPages.includes(currentHash)) {
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
   }
+
+  // Deep-link routing: honour #privacy / #terms on initial load and hash changes
+  (function () {
+    function routeFromHash() {
+      const hash = window.location.hash.slice(1);
+      if (deepLinkPages.includes(hash)) showPage(hash);
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', routeFromHash);
+    } else {
+      routeFromHash();
+    }
+    window.addEventListener('hashchange', routeFromHash);
+  })();
 
   function toggleNav() {
     document.getElementById('navLinks').classList.toggle('open');
