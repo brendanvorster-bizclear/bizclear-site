@@ -1,13 +1,9 @@
 {
-    "redirects": [
-          {
-                  "source": "/(.*)",
-                  "has": [{ "type": "host", "value": "bizclear.nz" }],
-                  "destination": "https://www.bizclear.nz/$1",
-                  "permanent": true
-          }
-    ],
-    "rewrites": [
-          { "source": "/(.*)", "destination": "/index.html" }
-    ]
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "destination": "https://www.youare.nz/appfast",
+      "permanent": false
+    }
+  ]
 }
