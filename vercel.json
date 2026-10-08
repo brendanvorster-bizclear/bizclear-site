@@ -1,8 +1,8 @@
 {
   "redirects": [
     {
-      "source": "/(.*)",
-      "destination": "https://www.youare.nz/appfast",
+      "source": "/(.+)",
+      "destination": "https://www.youare.nz/",
       "permanent": false
     }
   ]
